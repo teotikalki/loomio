@@ -60,6 +60,8 @@ EventBus.configure do |config|
                 'motion_close_date_edited_event',
                 'motion_closed_event',
                 'motion_closed_by_user_event',
+                'motion_outcome_created_event',
+                'motion_outcome_updated_event',
                 'motion_name_edited_event',
                 'discussion_description_edited_event',
                 'motion_description_edited_event',

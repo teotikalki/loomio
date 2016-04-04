@@ -5,7 +5,8 @@ class Discussion < ActiveRecord::Base
                           new_vote
                           motion_closed
                           motion_closed_by_user
-                          motion_outcome_created]
+                          motion_outcome_created
+                          motion_outcome_updated]
   THREAD_ITEM_KINDS = %w[new_comment
                          new_motion
                          new_vote
