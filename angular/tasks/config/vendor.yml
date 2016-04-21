@@ -21,7 +21,6 @@ js:
   - lokijs/src/lokijs.js
   - angular-inview/angular-inview.js
   - angular-gravatar/build/angular-gravatar.js
-  - angular-gravatar/build/md5.js
   - angular-scroll/angular-scroll.js
   - svg.js/dist/svg.js
   - jstimezonedetect/dist/jstz.js
