@@ -33,7 +33,11 @@ task :deploy do
     "bundle exec rake deploy:push[#{remote},#{branch},#{id}]",                        # deploy to heroku
     "bundle exec rake deploy:heroku_reset[#{remote}]"                                 # clean up heroku deploy
   ]
-  at_exit { run_commands ["git checkout #{branch}; git branch -D #{build_branch(remote, branch, id)}"] }
+  at_exit     { cleanup(remote, branch, id) }
+end
+
+def cleanup(remote, branch, id)
+  run_commands ["git checkout #{branch}; git branch -D #{build_branch(remote, branch, id)}"]
 end
 
 namespace :deploy do
@@ -53,9 +57,9 @@ namespace :deploy do
     plugins = args[:plugins] || 'loomio_org'
     puts "Building clientside assets, using plugin set #{plugins}..."
     run_commands [
-      "rake 'plugins:acquire[#{plugins}]' plugins:resolve_dependencies plugins:install", # install plugins specified in plugins/plugins.yml
+      "rake 'plugins:fetch' plugins:install",                                            # install plugins specified in plugins/plugins.yml
       "rm -rf plugins/**/.git",                                                          # allow cloned plugins to be added to this repo
-      "cd angular && npm install && node_modules/gulp/bin/gulp.js compile && cd ../",                             # build the app via gulp
+      "cd angular && npm install && node_modules/gulp/bin/gulp.js compile && cd ../",    # build the app via gulp
       "cp -r public/client/development public/client/#{Loomio::Version.current}"         # version assets
     ]
   end
