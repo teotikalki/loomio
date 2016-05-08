@@ -7,13 +7,17 @@ module Plugins
 
     def self.install_plugins!
       Dir.chdir('plugins') { Dir['*/plugin.rb'].each { |file| load file } }
+      config = YAML.load_file(Rails.root.join(*%w(config plugins.yml))).with_indifferent_access
       repository.values.each do |plugin|
         next unless plugin.enabled
 
         plugin.actions.map(&:call)
         plugin.assets.map  { |asset|  save_asset(asset) }
-        plugin.outlets.map { |outlet| active_outlets[outlet.outlet_name] = active_outlets[outlet.outlet_name] << outlet }
         plugin.events.map  { |events| events.call(EventBus) }
+        plugin.outlets.map do |outlet|
+          outlet.beta = config.dig(plugin.name, :beta).present?
+          active_outlets[outlet.outlet_name] = active_outlets[outlet.outlet_name] << outlet
+        end
         plugin.installed = true
       end
       save_plugin_yaml

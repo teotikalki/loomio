@@ -1,5 +1,4 @@
 angular.module('loomioApp').controller 'GroupPageController', ($rootScope, $location, $routeParams, Records, CurrentUser, MessageChannelService, AbilityService, AppConfig, LmoUrlService, PaginationService, ModalService, SubscriptionSuccessModal, GroupWelcomeModal, LegacyTrialExpiredModal) ->
-  $rootScope.$broadcast 'currentComponent', {page: 'groupPage'}
 
   # allow for chargify reference, which comes back #{groupKey}|#{timestamp}
   $routeParams.key = $routeParams.key.split('|')[0]
@@ -25,6 +24,7 @@ angular.module('loomioApp').controller 'GroupPageController', ($rootScope, $loca
     $rootScope.$broadcast 'analyticsSetGroup', @group
     $rootScope.$broadcast 'currentComponent',
       page: 'groupPage'
+      group: @group
       links:
         canonical:   LmoUrlService.group(@group, {}, absolute: true)
         rss:         LmoUrlService.group(@group, {}, absolute: true, ext: 'xml') if !@group.privacyIsSecret()

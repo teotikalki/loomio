@@ -4,7 +4,7 @@ module Plugins
   class NoCodeSpecifiedError < Exception; end
   class NoClassSpecifiedError < Exception; end
   class InvalidAssetType < Exception; end
-  Outlet = Struct.new(:plugin, :component, :outlet_name)
+  Outlet = Struct.new(:plugin, :component, :outlet_name, :beta)
   VALID_ASSET_TYPES = [:coffee, :scss, :haml, :js, :css]
 
   class Base

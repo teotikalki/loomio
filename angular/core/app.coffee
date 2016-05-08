@@ -54,6 +54,7 @@ angular.module('loomioApp').controller 'ApplicationController', ($scope, $filter
     $scope.pageError = null
     ScrollService.scrollTo(options.scrollTo or 'h1')
     $scope.links = options.links or {}
+    AppConfig.showBetaPlugins = options.group and _.contains(AppConfig.betaPluginGroups, options.group.key)
 
   $scope.$on 'setTitle', (event, title) ->
     document.querySelector('title').text = _.trunc(title, 300) + ' | Loomio'

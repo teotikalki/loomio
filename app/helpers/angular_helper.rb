@@ -40,7 +40,8 @@ module AngularHelper
         groupThreads:      ENV['GROUP_PAGE_SIZE'],
         threadItems:       ENV['THREAD_PAGE_SIZE'],
         exploreGroups:     ENV['EXPLORE_PAGE_SIZE'] || 10
-      }
+      },
+      betaPluginGroups:    Group.where(enable_beta_plugins: true).pluck(:key)
     }
   end
 

@@ -1,5 +1,4 @@
 angular.module('loomioApp').controller 'MembershipsPageController', ($routeParams, $rootScope, Records, LoadingService, ModalService, InvitationForm, RemoveMembershipForm, AbilityService, FlashService, ScrollService) ->
-  $rootScope.$broadcast('currentComponent', { page: 'membershipsPage'})
 
   @init = (group) =>
     return if @group? or !group?
@@ -7,6 +6,7 @@ angular.module('loomioApp').controller 'MembershipsPageController', ($routeParam
       @group = group
       Records.memberships.fetchByGroup(@group.key, per: 100).then ->
         ScrollService.scrollTo("[data-username=#{$routeParams.username}]") if $routeParams.username?
+      $rootScope.$broadcast 'currentComponent', {page: 'membershipsPage', group: @group}
     else
       $rootScope.$broadcast 'pageError', { status: 403 }, group
 

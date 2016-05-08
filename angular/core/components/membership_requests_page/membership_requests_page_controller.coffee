@@ -1,10 +1,10 @@
 angular.module('loomioApp').controller 'MembershipRequestsPageController', ($routeParams, $rootScope, Records, LoadingService, AbilityService, FlashService, AppConfig) ->
-  $rootScope.$broadcast('currentComponent', { page: 'membershipRequestsPage'})
 
   @init = =>
     Records.groups.findOrFetchById($routeParams.key).then (group) =>
       if AbilityService.canManageMembershipRequests(group)
         @group = group
+        $rootScope.$broadcast 'currentComponent', {page: 'membershipRequestsPage', group: @group}
         Records.membershipRequests.fetchPendingByGroup(group.key, per: 100)
         Records.membershipRequests.fetchPreviousByGroup(group.key, per: 100)
       else

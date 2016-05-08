@@ -1,5 +1,4 @@
 angular.module('loomioApp').controller 'ThreadPageController', ($scope, $routeParams, $location, $rootScope, $window, Records, MessageChannelService, ModalService, DiscussionForm, MoveThreadForm, DeleteThreadForm, ScrollService, AbilityService, CurrentUser, ChangeVolumeForm, PaginationService, LmoUrlService, TranslationService, RevisionHistoryModal, ProposalOutcomeForm) ->
-  $rootScope.$broadcast('currentComponent', { page: 'threadPage'})
 
   @requestedProposalKey = $routeParams.proposal or $location.search().proposal
   @requestedCommentId   = parseInt($routeParams.comment or $location.search().comment)
@@ -54,6 +53,7 @@ angular.module('loomioApp').controller 'ThreadPageController', ($scope, $routePa
       $rootScope.$broadcast 'analyticsSetGroup', @discussion.group()
       $rootScope.$broadcast 'currentComponent',
         page: 'threadPage'
+        group: @discussion.group()
         links:
           canonical:   LmoUrlService.discussion(@discussion, {}, absolute: true)
           rss:         LmoUrlService.discussion(@discussion) + '.xml' if !@discussion.private
