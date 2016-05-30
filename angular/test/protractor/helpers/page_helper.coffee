@@ -51,9 +51,11 @@ module.exports = new class PageHelper
 
   cancelConfirmDialog: ->
     browser.switchTo().alert().dismiss()
+    browser.driver.sleep(200)
 
   acceptConfirmDialog: ->
     browser.switchTo().alert().accept()
+    browser.driver.sleep(200)
 
   expectSelected: ->
     _.each given(arguments), (selector) ->
