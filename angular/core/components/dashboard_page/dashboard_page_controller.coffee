@@ -4,6 +4,8 @@ angular.module('loomioApp').controller 'DashboardPageController', ($rootScope, $
   $rootScope.$broadcast('setTitle', 'Dashboard')
   $rootScope.$broadcast('analyticsClearGroup')
 
+  @initialLoadComplete = -> AppConfig.dashboardLoaded?
+
   @perPage = 50
   @loaded =
     show_all:           0
@@ -32,6 +34,7 @@ angular.module('loomioApp').controller 'DashboardPageController', ($rootScope, $
     _.contains ['show_muted'], @filter
 
   @updateQueries = =>
+    AppConfig.dashboardLoaded = true
     @currentBaseQuery = ThreadQueryService.filterQuery(['only_threads_in_my_groups', @filter])
     if @displayByGroup()
       _.each @groups(), (group) =>
